@@ -5,10 +5,29 @@ import json
 def calculate_panels(panel_width: int, panel_height: int, 
                     roof_width: int, roof_height: int) -> int:
     
-    # Implementa acá tu solución
-    
-    return 0
+    def solve (pw, ph, rw, rh):    
 
+        num_x = rw // pw
+        num_y = rh // ph
+        total_principal = num_x * num_y
+
+        sobrante_derecha_ancho = rw - (num_x * pw)
+        sobrante_abajo_alto = rh - (num_y * ph)
+        
+        extra_derecha = 0
+        if sobrante_derecha_ancho >= ph and rh >= pw:
+            extra_derecha = (sobrante_derecha_ancho // ph) * (rh // pw)
+
+        extra_abajo = 0
+        if sobrante_abajo_alto >= pw and (num_x * pw) >= ph:
+            extra_abajo = (sobrante_abajo_alto // pw) * (num_x * pw) // ph
+
+        return total_principal + extra_derecha + extra_abajo
+
+    opciona = solve(panel_width, panel_height, roof_width, roof_height)
+    opcionb = solve(panel_height, panel_width, roof_width, roof_height)
+
+    return max(opciona, opcionb)    
 
 def run_tests() -> None:
     with open('test_cases.json', 'r') as f:
