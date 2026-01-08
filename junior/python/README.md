@@ -34,8 +34,7 @@ Tu solución debe pasar los siguientes casos de prueba:
 
 ## 📝 Tu Solución
 
-Deja acá el link a tu video explicando tu solución con tus palabras
-
+https://drive.google.com/file/d/1TrNyKxDI_JZu9kBas1YjKPcgSFHskoe-/view?usp=drive_link
 ---
 
 ## 💰 Bonus (Opcional)

@@ -5,29 +5,26 @@ import json
 def calculate_panels(panel_width: int, panel_height: int, 
                     roof_width: int, roof_height: int) -> int:
     
-    def solve (pw, ph, rw, rh):    
+    max_panels_width = 0
 
-        num_x = rw // pw
-        num_y = rh // ph
-        total_principal = num_x * num_y
+    for w,h in [(panel_width, panel_height), (panel_height, panel_width)]:
+        if w > roof_width or h > roof_height:
+            continue
 
-        sobrante_derecha_ancho = rw - (num_x * pw)
-        sobrante_abajo_alto = rh - (num_y * ph)
-        
-        extra_derecha = 0
-        if sobrante_derecha_ancho >= ph and rh >= pw:
-            extra_derecha = (sobrante_derecha_ancho // ph) * (rh // pw)
+        nx, ny = roof_width // w, roof_height // h
+        total = nx * ny
 
-        extra_abajo = 0
-        if sobrante_abajo_alto >= pw and (num_x * pw) >= ph:
-            extra_abajo = (sobrante_abajo_alto // pw) * (num_x * pw) // ph
+        sobrante_x = roof_width - (nx * w)
+        sobrante_y = roof_height - (ny * h)
 
-        return total_principal + extra_derecha + extra_abajo
+        extra_x = sobrante_x // h * (roof_height // w) if sobrante_x >= h and roof_height >= w else 0
 
-    opciona = solve(panel_width, panel_height, roof_width, roof_height)
-    opcionb = solve(panel_height, panel_width, roof_width, roof_height)
+        extra_y = sobrante_y // w * (roof_width // h) if sobrante_y >= w and roof_width >= h else 0
 
-    return max(opciona, opcionb)    
+        max_panels_width = max(max_panels_width, total + extra_x + extra_y)
+
+    return max_panels_width
+
 
 def run_tests() -> None:
     with open('test_cases.json', 'r') as f:
